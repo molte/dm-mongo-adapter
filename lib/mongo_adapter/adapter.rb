@@ -179,12 +179,7 @@ module DataMapper
         attributes = {}
 
         record.each do |key, value|
-          case key
-            when DataMapper::Property
-              attributes[key.field] = dump_field_value(key.dump(value))
-            when Embedments::Relationship
-              attributes[key.storage_name] = attributes_as_fields(value)
-            end
+          attributes[key.field] = dump_field_value(key.dump(value))
         end
 
         attributes
