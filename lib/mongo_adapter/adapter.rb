@@ -171,18 +171,6 @@ module DataMapper
           attributes[property.field] = dump_field_value(property.dump(property.get(record)))
         end
 
-        if model.respond_to?(:embedments)
-          model.embedments.each do |name, embedment|
-            value = record.__send__(name)
-
-            if embedment.kind_of?(Embedments::OneToMany::Relationship)
-              attributes[embedment.storage_name] = value.map{ |resource| attributes_as_fields(resource) }
-            else
-              attributes[name] = attributes_as_fields(value)
-            end
-          end
-        end
-
         attributes
       end
 

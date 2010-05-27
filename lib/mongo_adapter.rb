@@ -18,18 +18,9 @@ require dir / 'support' / 'date'
 require dir / 'support' / 'date_time'
 require dir / 'support' / 'object'
 
-require dir / 'model' / 'embedment'
 require dir / 'model'
-
 require dir / 'resource'
 require dir / 'migrations'
-
-require dir / 'embedments' / 'relationship'
-require dir / 'embedments' / 'one_to_one'
-require dir / 'embedments' / 'one_to_many'
-
-require dir / 'embedded_model'
-require dir / 'embedded_resource'
 require dir / 'modifier'
 
 require dir / 'aggregates'
