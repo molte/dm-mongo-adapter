@@ -26,10 +26,6 @@ module DataMapper
           type = DataMapper::Mongo::Property::Array
         elsif Hash == type
           type = DataMapper::Mongo::Property::Hash
-        elsif DateTime == type
-          type = DataMapper::Mongo::Types::DateTime
-        elsif Date == type
-          type = DataMapper::Mongo::Types::Date
         end
 
         super(name, type, options)
