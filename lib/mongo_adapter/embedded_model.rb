@@ -181,6 +181,44 @@ module DataMapper
           raise IncompleteModelError, "#{self.name} must have at least one property to be valid"
         end
       end
+      
+      # Defines a Property on the Resource
+      #
+      # Overrides the property method in dm-core so as to automatically map
+      # Array and Hash types to EmbeddedArray and EmbeddedHash respectively.
+      #
+      # @param [Symbol] name
+      #   the name for which to call this property
+      # @param [Type] type
+      #   the type to define this property ass
+      # @param [Hash(Symbol => String)] options
+      #   a hash of available options
+      #
+      # @return [Property]
+      #   the created Property
+      #
+      # @api public
+      def property(name, type, options = {})
+        case type
+        when Array
+          super(name, DataMapper::Mongo::Property::Array, options)
+        when Hash
+          super(name, DataMapper::Mongo::Property::Hash, options)
+        else
+          super(name, type, options)
+        end
+      end
+
+      private
+
+      # @api private
+      def const_missing(name)
+        if DataMapper::Mongo::Property.const_defined?(name)
+          DataMapper::Mongo::Property.const_get(name)
+        else
+          super(name)
+        end
+      end
 
     end # EmbeddedModel
   end # Mongo

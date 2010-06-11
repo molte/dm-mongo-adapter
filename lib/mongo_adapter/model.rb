@@ -22,13 +22,14 @@ module DataMapper
       #
       # @api public
       def property(name, type, options = {})
-        if Array == type
-          type = DataMapper::Mongo::Property::Array
-        elsif Hash == type
-          type = DataMapper::Mongo::Property::Hash
+        case type
+        when Array
+          super(name, DataMapper::Mongo::Property::Array, options)
+        when Hash
+          super(name, DataMapper::Mongo::Property::Hash, options)
+        else
+          super(name, type, options)
         end
-
-        super(name, type, options)
       end
 
       # Loads an instance of this Model, taking into account IdentityMap
@@ -68,7 +69,7 @@ module DataMapper
         if DataMapper::Mongo::Property.const_defined?(name)
           DataMapper::Mongo::Property.const_get(name)
         else
-          super
+          super(name)
         end
       end
     end # Model
